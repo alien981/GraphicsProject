@@ -233,7 +233,7 @@ def run(filename):
                 save_extension(screen, args[0])
 
         if vary==True:
-            save_extension(screen, basename+('03d' % q) + '.png')
+            save_extension(screen, basename+('%03d' % q) + '.png')
         tmp = new_matrix()
         ident( tmp )
 
