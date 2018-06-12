@@ -1,4 +1,5 @@
 ambient 0 250 0
+constants name 1 1 1 1 1 1 1 1 1
 push
 move 250 250 0
 scale 2 2 2

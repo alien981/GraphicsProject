@@ -102,12 +102,7 @@ def run(filename):
     ambient = [100,
                100,
                100]
-    light = [[0.5,
-              0.75,
-              1],
-             [255,
-              255,
-              255]]
+    light = [  ]
     areflect = [0.1,
                 0.1,
                 0.1]
@@ -135,6 +130,10 @@ def run(filename):
 
     if p:
         (commands, symbols) = p
+        print 'symbols:'
+        print symbols
+        print 'commands:'
+        print commands
     else:
         print "Parsing failed."
         return
@@ -150,7 +149,6 @@ def run(filename):
 
     q = 0
     while q < num_frames:
-        print q
         for command in commands:
             c = command['op']
             args = command['args']
@@ -234,14 +232,25 @@ def run(filename):
                 stack.append([x[:] for x in stack[-1]] )
             elif c == 'ambient':
                 ambient = [args[0], args[1], args[2]]
-                print ambient
             elif c == 'pop':
                 stack.pop()
             elif c == 'display':
                 display(screen)
             elif c == 'save':
                 save_extension(screen, args[0])
-
+            elif c == 'constants':
+                areflect[0] = symbols[command['constants']][1]['red'][0]
+                areflect[1] = symbols[command['constants']][1]['green'][0]
+                areflect[2] = symbols[command['constants']][1]['blue'][0]
+                dreflect[0] = symbols[command['constants']][1]['red'][1]
+                dreflect[1] = symbols[command['constants']][1]['green'][1]
+                dreflect[2] = symbols[command['constants']][1]['blue'][1]
+                sreflect[0] = symbols[command['constants']][1]['red'][2]
+                sreflect[1] = symbols[command['constants']][1]['green'][2]
+                sreflect[2] = symbols[command['constants']][1]['blue'][2]
+                print areflect
+                print dreflect
+                print sreflect
 
         if vary==True:
             save_extension(screen,'./anim/'+ basename+('%03d' % q) + '.png')
