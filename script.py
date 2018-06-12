@@ -87,6 +87,7 @@ def second_pass( commands, numf ):
             frame = startf
 
             while (frame < endf):
+                print 'frame: ' + str(frame)
                 knobs[int(frame)].update({key: value})
                 frame += 1
                 value += d
@@ -153,16 +154,22 @@ def run(filename):
         for command in commands:
             c = command['op']
             args = command['args']
-            if (c=='move' and len(args)==4):
-                args[0] *= knobs[q][args[3]]
-                args[1] *= knobs[q][args[3]]
-                args[2] *= knobs[q][args[3]]
-            elif (c=='rotate' and len(args)==3):				
-                args[1] *= knobs[q][args[2]]
-            elif (c=='scale' and len(args)==4):
-                args[0] *= knobs[q][args[3]]
-                args[1] *= knobs[q][args[3]]
-                args[2] *= knobs[q][args[3]]
+            if not args == None:
+                args = command['args'][:]
+
+            for knob in knobs[q]:
+                symbols[knob][1] = knobs[q][knob]
+
+            if (c=='move' and command['knob'] != None):
+                args[0] *= symbols[knob][1]
+                args[1] *= symbols[knob][1]
+                args[2] *= symbols[knob][1]
+            elif (c=='rotate' and command['knob'] != None):	
+                args[1] *= symbols[knob][1]
+            elif (c=='scale' and command['knob'] != None):
+                args[0] *= symbols[knob][1]
+                args[1] *= symbols[knob][1]
+                args[2] *= symbols[knob][1]
 
             if c == 'box':
                 if isinstance(args[0], str):
