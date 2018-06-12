@@ -99,13 +99,13 @@ def run(filename):
     view = [0,
             0,
             1];
-    ambient = [50,
-               50,
-               50]
+    ambient = [100,
+               100,
+               100]
     light = [[0.5,
               0.75,
               1],
-             [0,
+             [255,
               255,
               255]]
     areflect = [0.1,
@@ -232,12 +232,16 @@ def run(filename):
                 tmp = []
             elif c == 'push':
                 stack.append([x[:] for x in stack[-1]] )
+            elif c == 'ambient':
+                ambient = [args[0], args[1], args[2]]
+                print ambient
             elif c == 'pop':
                 stack.pop()
             elif c == 'display':
                 display(screen)
             elif c == 'save':
                 save_extension(screen, args[0])
+
 
         if vary==True:
             save_extension(screen,'./anim/'+ basename+('%03d' % q) + '.png')
