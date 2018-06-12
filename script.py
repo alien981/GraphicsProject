@@ -86,7 +86,7 @@ def second_pass( commands, numf ):
             value = startnum
             frame = startf
 
-            while (frame <= endf):
+            while (frame < endf):
                 knobs[int(frame)].update({key: value})
                 frame += 1
                 value += d
@@ -149,7 +149,7 @@ def run(filename):
 
     q = 0
     while q < num_frames:
-
+        print q
         for command in commands:
             c = command['op']
             args = command['args']
@@ -233,7 +233,7 @@ def run(filename):
                 save_extension(screen, args[0])
 
         if vary==True:
-            save_extension(screen, basename+('%03d' % q) + '.png')
+            save_extension(screen,'./anim/'+ basename+('%03d' % q) + '.png')
         tmp = new_matrix()
         ident( tmp )
 
