@@ -28,7 +28,9 @@ def first_pass( commands ):
     for command in commands:
         c = command['op']
         args = command['args']
-
+        global num_frames
+        global vary
+        global basename
         if c == "frames":	
             num_frames = args[0]
         if c == "basename":
@@ -65,11 +67,12 @@ def first_pass( commands ):
   dictionary corresponding to the given knob with the
   appropirate value.
   ===================="""
-def second_pass( commands, num_frames ):
+def second_pass( commands, numf ):
     for command in commands:
         c = command['op']
         args = command['args']
-
+        global num_frames
+        global knobs
         if c == "vary":
             key = command['knob']
             print "key: " + str(key)
@@ -137,6 +140,10 @@ def run(filename):
 
 
     first_pass(commands)
+    print 'num_frames: ' + str(num_frames)
+    print 'vary: ' + str(vary)
+    print 'basen: ' + str(basename)
+    print knobs
     second_pass(commands, num_frames)
 
 
@@ -235,9 +242,7 @@ def run(filename):
         zbuffer = new_zbuffer()
         tmp = []
         step_3d = 20
-
         q += 1
-
     if vary==True:
         make_animation(basename)
 
