@@ -142,7 +142,6 @@ def run(filename):
 
     q = 0
     while q < num_frames:
-        q += 1
 
         for command in commands:
             c = command['op']
@@ -236,6 +235,8 @@ def run(filename):
         zbuffer = new_zbuffer()
         tmp = []
         step_3d = 20
+
+        q += 1
 
     if vary==True:
         make_animation(basename)
