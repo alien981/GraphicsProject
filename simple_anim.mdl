@@ -1,7 +1,9 @@
-frames 10
+light asdfghjkl 255 255 255 .75 .5 0
+light asdfghjkla 0 255 255 .5 .75 0
+frames 20
 basename simple
 push
 move 250 250 0
-rotate y 360 spinny
+scale 2 2 2 spinny
 sphere 0 0 0 100
-vary spinny 0 10 0 1
+vary spinny 0 20 0 1

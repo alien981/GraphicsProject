@@ -241,8 +241,9 @@ def run(filename):
                 sreflect[1] = symbols[command['constants']][1]['green'][2]
                 sreflect[2] = symbols[command['constants']][1]['blue'][2]
             elif c == 'light':
-                light.append([symbols[command['light']][1]['color'], symbols[command['light']][1]['location']])
-                print light
+                if q == 0:
+                    light.append([symbols[command['light']][1]['color'], symbols[command['light']][1]['location']])
+                    print light
 
 
         if vary==True:
