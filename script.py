@@ -130,10 +130,6 @@ def run(filename):
 
     if p:
         (commands, symbols) = p
-        print 'symbols:'
-        print symbols
-        print 'commands:'
-        print commands
     else:
         print "Parsing failed."
         return
@@ -244,6 +240,10 @@ def run(filename):
                 sreflect[0] = symbols[command['constants']][1]['red'][2]
                 sreflect[1] = symbols[command['constants']][1]['green'][2]
                 sreflect[2] = symbols[command['constants']][1]['blue'][2]
+            elif c == 'light':
+                light.append([symbols[command['light']][1]['color'], symbols[command['light']][1]['location']])
+                print light
+
 
         if vary==True:
             save_extension(screen,'./anim/'+ basename+('%03d' % q) + '.png')

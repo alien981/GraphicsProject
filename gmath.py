@@ -10,30 +10,29 @@ SPECULAR_EXP = 4
 
 #lighting functions
 def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
+
     normalize(normal)
-    for q in light:
-        normalize(q[LOCATION])
     normalize(view)
 
-    a = calculate_ambient(ambient, areflect)
-    d = [0, 0, 0]
-    for q in light:
-        t = calculate_diffuse(q, dreflect, normal)
-        d[0] += t[0]
-        d[1] += t[1]
-        d[2] += t[2]
-
-    s = [0, 0, 0]
-    for q in light:
-        r = calculate_specular(q, sreflect, view, normal)
-        s[0] += r[0]
-        s[1] += r[1]
-        s[2] += r[2]
-
     i = [0, 0, 0]
-    i[RED] = int(a[RED] + d[RED] + s[RED])
-    i[GREEN] = int(a[GREEN] + d[GREEN] + s[GREEN])
-    i[BLUE] = int(a[BLUE] + d[BLUE] + s[BLUE])
+    a = calculate_ambient(ambient, areflect)
+    i[RED] = int(a[RED])
+    i[BLUE] = int(a[BLUE])
+    i[GREEN] = int(a[GREEN])
+
+
+    for q in light:
+        normalize(q[LOCATION])
+        d = calculate_diffuse(q, dreflect, normal)
+        i[RED] += int(d[RED])
+        i[BLUE] += int(d[BLUE])
+        i[GREEN] += int(d[GREEN])
+        s = calculate_specular(q, sreflect, view, normal)
+        i[RED] += int(s[RED])
+        i[BLUE] += int(s[BLUE])
+        i[GREEN] += int(s[GREEN])
+
+
     limit_color(i)
 
     return i
