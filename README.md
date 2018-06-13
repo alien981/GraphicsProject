@@ -1,20 +1,20 @@
-# GraphicsProject
+## GraphicsProject
 
-## Working features:
+### Working features:
 
-### Ambient
+#### Ambient
 Format: ambient x y z
 
 Description: sets ambient light to [x, y, z]
 
-### Constants
+#### Constants
 
-### Multiple lights
+#### Multiple lights
 light a b c x y z 
  
 Description: adds[[a, b, c], [x, y, z]] to array of lights. Image begins with no extra lights
 
-### Changing light in animation:
+#### Changing light in animation:
 Format:
 
 light name a b c d e f g
