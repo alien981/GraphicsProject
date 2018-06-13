@@ -30,9 +30,11 @@ light faraday2 0 255 255 .5 .75 0
 Description: Light starts as name and changes color and position in each frame until it becomes name2 at the end of the animation
 
 Note: can only be used if there already is an animation going on. Doesn't work if light is the only thing moving
+
 ------------------working on
 
 ---------------to do
--Gouraud shading
--Phong shading
+
+1. Gouraud shading
+2. Phong shading
 
