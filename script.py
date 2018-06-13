@@ -140,10 +140,6 @@ def run(filename):
 
 
     first_pass(commands)
-    print 'num_frames: ' + str(num_frames)
-    print 'vary: ' + str(vary)
-    print 'basen: ' + str(basename)
-    print knobs
     second_pass(commands, num_frames)
 
 
@@ -248,9 +244,6 @@ def run(filename):
                 sreflect[0] = symbols[command['constants']][1]['red'][2]
                 sreflect[1] = symbols[command['constants']][1]['green'][2]
                 sreflect[2] = symbols[command['constants']][1]['blue'][2]
-                print areflect
-                print dreflect
-                print sreflect
 
         if vary==True:
             save_extension(screen,'./anim/'+ basename+('%03d' % q) + '.png')
