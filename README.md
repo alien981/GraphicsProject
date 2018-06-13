@@ -9,7 +9,7 @@ Description: sets ambient light to [x, y, z]
 ### Constants
 
 ### Multiple lights
-light a b c x y z\n
+light a b c x y z \n 
 Description: adds[[a, b, c], [x, y, z]] to array of lights. Image begins with no extra lights
 
 ### Changing light in animation:
