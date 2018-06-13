@@ -34,7 +34,7 @@ Note: can only be used if there already is an animation going on. Doesn't work i
 ------------------working on
 
 ---------------to do
-
-1. Gouraud shading
-2. Phong shading
+1. Glowy lines
+2. Gouraud shading
+3. Phong shading
 
