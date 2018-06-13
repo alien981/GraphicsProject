@@ -1,5 +1,5 @@
-light asdfghjkl 255 255 255 .75 .5 0
-light asdfghjkla 0 255 255 .5 .75 .25
+light asdfghjkl 255 0 255 .75 .5 0
+light asdfghjkl2 0 255 0 .5 .75 0
 push
 move 250 250 0
 scale 2 2 2

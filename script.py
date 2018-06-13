@@ -92,6 +92,8 @@ def second_pass( commands, numf ):
                 frame += 1
                 value += d
 
+
+
 def run(filename):
     """
     This function runs an mdl script
@@ -103,6 +105,9 @@ def run(filename):
                100,
                100]
     light = [  ]
+    endlight = []
+    usedplus2 = []
+    dendlight = []
     areflect = [0.1,
                 0.1,
                 0.1]
@@ -138,9 +143,48 @@ def run(filename):
     first_pass(commands)
     second_pass(commands, num_frames)
 
+    for command in commands:
+        c = command['op']
+        if c == 'light' and not(command['light'] in usedplus2):
+            light.append([symbols[command['light']][1]['color'], symbols[command['light']][1]['location']])
+            if (command['light'] + '2') in symbols:
+                usedplus2.append(command['light']+'2')
+                endlight.append([symbols[command['light']+'2'][1]['color'], symbols[command['light']+'2'][1]['location']])
+                del symbols[command['light']+'2']
+            else:
+                endlight.append([])
 
+
+    if num_frames>1:
+        a = 0
+        while a < len(light):
+            if endlight[a] == []:
+                 dendlight.append([[0, 0, 0], [0, 0, 0]])
+            else:
+                d0 = (endlight[a][0][0] - light[a][0][0])/num_frames
+                d1 = (endlight[a][0][1] - light[a][0][1])/num_frames
+                d2 = (endlight[a][0][2] - light[a][0][2])/num_frames
+                d3 = (endlight[a][1][0] - light[a][1][0])/num_frames
+                d4 = (endlight[a][1][1] - light[a][1][1])/num_frames
+                d5 = (endlight[a][1][2] - light[a][1][2])/num_frames
+                dendlight.append([[d0, d1, d2], [d3, d4, d5]])
+            a += 1
+    print light
+    print endlight
+    print dendlight
     q = 0
     while q < num_frames:
+        if num_frames>1:
+            a = 0
+            while a < len(light):
+                light[a][0][0] += dendlight[a][0][0]
+                light[a][0][1] += dendlight[a][0][1]
+                light[a][0][2] += dendlight[a][0][2]
+                light[a][1][0] += dendlight[a][1][0]
+                light[a][1][1] += dendlight[a][1][1]
+                light[a][1][2] += dendlight[a][1][2]
+                a += 1
+
         for command in commands:
             c = command['op']
             args = command['args']
@@ -240,10 +284,6 @@ def run(filename):
                 sreflect[0] = symbols[command['constants']][1]['red'][2]
                 sreflect[1] = symbols[command['constants']][1]['green'][2]
                 sreflect[2] = symbols[command['constants']][1]['blue'][2]
-            elif c == 'light':
-                if q == 0:
-                    light.append([symbols[command['light']][1]['color'], symbols[command['light']][1]['location']])
-                    print light
 
 
         if vary==True:
@@ -259,6 +299,7 @@ def run(filename):
         q += 1
     if vary==True:
         make_animation(basename)
+
 
 
 
