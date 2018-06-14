@@ -185,7 +185,7 @@ def run(filename):
                 light[a][1][1] += dendlight[a][1][1]
                 light[a][1][2] += dendlight[a][1][2]
                 a += 1
-
+        print commands
         for command in commands:
             c = command['op']
             args = command['args']
@@ -285,15 +285,35 @@ def run(filename):
                 for face in faces:
                     y = 0
                     while y < len(face):
-                        print y
-                        print vertices[face[y]]
-                        print vertices[face[(y+1)%len(face)]]
-                        add_edge(tmp,
+                        if command['constants']=='glowy':
+                            f = 5
+                            dr = linecolor[0]/f
+                            dg = linecolor[1]/f
+                            db = linecolor[2]/f
+                            g = [0, 0, 0]
+                            while f >= 0:
+                                add_edge(tmp,
+                         vertices[face[y]][0], vertices[face[y]][1]+f, vertices[face[y]][2], vertices[face[(y+1)%len(face)]][0],  
+vertices[face[(y+1)%len(face)]][1]-f, 
+vertices[face[(y+1)%len(face)]][2]
+)
+                                add_edge(tmp,
+                         vertices[face[y]][0], vertices[face[y]][1]-f, vertices[face[y]][2], vertices[face[(y+1)%len(face)]][0],  vertices[face[(y+1)%len(face)]][1]-f, vertices[face[(y+1)%len(face)]][2])
+                                add_edge(tmp,
+                         vertices[face[y]][0]+f, vertices[face[y]][1], vertices[face[y]][2], vertices[face[(y+1)%len(face)]][0]+f,  vertices[face[(y+1)%len(face)]][1], vertices[face[(y+1)%len(face)]][2])
+                                add_edge(tmp,
+                         vertices[face[y]][0]-f, vertices[face[y]][1], vertices[face[y]][2], vertices[face[(y+1)%len(face)]][0]-f,  vertices[face[(y+1)%len(face)]][1], vertices[face[(y+1)%len(face)]][2])
+                                matrix_mult( stack[-1], tmp )
+                                draw_lines(tmp, screen, zbuffer, g)
+                                tmp = []
+                                g = [g[0]+dr, g[1]+dg, g[2]+db]
+                                f -= 1
+                        else:
+                            add_edge(tmp,
                      vertices[face[y]][0], vertices[face[y]][1], vertices[face[y]][2], vertices[face[(y+1)%len(face)]][0], vertices[face[(y+1)%len(face)]][1], vertices[face[(y+1)%len(face)]][2])
-                        print tmp
-                        matrix_mult( stack[-1], tmp )
-                        draw_lines(tmp, screen, zbuffer, [255, 255, 255])
-                        tmp = []
+                            matrix_mult( stack[-1], tmp )
+                            draw_lines(tmp, screen, zbuffer, [255, 255, 255])
+                            tmp = []
                         y += 1
 
 
