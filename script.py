@@ -206,6 +206,7 @@ def run(filename):
                 args[1] *= symbols[knob][1]
                 args[2] *= symbols[knob][1]
 
+
             if c == 'box':
                 if isinstance(args[0], str):
                     consts = args[0]
@@ -239,7 +240,7 @@ def run(filename):
                     args = args[:3] + args[4:]
                 if isinstance(args[-1], str):
                     coords1 = args[-1]
-                f = 6
+                f = 5
                 dr = linecolor[0]/f
                 dg = linecolor[1]/f
                 db = linecolor[2]/f
@@ -264,6 +265,41 @@ def run(filename):
                 matrix_mult(stack[-1], tmp)
                 stack[-1] = [x[:] for x in tmp]
                 tmp = []
+
+            elif c == 'mesh':
+                filename = command['cs']
+                f = open(filename+'.obj', 'r')
+                t = f.readlines()
+                vertices = [[0,0,0]]
+                faces = []
+                for y in t:
+                    r = y.split()
+                    if r[0] == 'v':
+                        r.remove('v')
+                        r = [int(r[0]), int(r[1]), int(r[2])]
+                        vertices.append(r)
+                    elif r[0] == 'f':
+                        r.remove('f')
+                        r = [int(r[0]), int(r[1]), int(r[2])]
+                        faces.append(r)
+                for face in faces:
+                    y = 0
+                    while y < len(face):
+                        print y
+                        print vertices[face[y]]
+                        print vertices[face[(y+1)%len(face)]]
+                        add_edge(tmp,
+                     vertices[face[y]][0], vertices[face[y]][1], vertices[face[y]][2], vertices[face[(y+1)%len(face)]][0], vertices[face[(y+1)%len(face)]][1], vertices[face[(y+1)%len(face)]][2])
+                        print tmp
+                        matrix_mult( stack[-1], tmp )
+                        draw_lines(tmp, screen, zbuffer, [255, 255, 255])
+                        tmp = []
+                        y += 1
+
+
+
+
+
             elif c == 'scale':
                 tmp = make_scale(args[0], args[1], args[2])
                 matrix_mult(stack[-1], tmp)
