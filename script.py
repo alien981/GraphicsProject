@@ -119,7 +119,7 @@ def run(filename):
                 0.5]
     glowy = True
     color = [0, 0, 0]
-    linecolor = [255, 150, 50]
+    linecolor = [255, 150, 80]
     tmp = new_matrix()
     ident( tmp )
 
