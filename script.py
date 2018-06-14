@@ -117,8 +117,9 @@ def run(filename):
     sreflect = [0.5,
                 0.5,
                 0.5]
-
+    glowy = True
     color = [0, 0, 0]
+    linecolor = [255, 150, 50]
     tmp = new_matrix()
     ident( tmp )
 
@@ -238,11 +239,26 @@ def run(filename):
                     args = args[:3] + args[4:]
                 if isinstance(args[-1], str):
                     coords1 = args[-1]
-                add_edge(tmp,
-                     args[0], args[1], args[2], args[3], args[4], args[5])
-                matrix_mult( stack[-1], tmp )
-                draw_lines(tmp, screen, zbuffer, color)
-                tmp = []
+                f = 6
+                dr = linecolor[0]/f
+                dg = linecolor[1]/f
+                db = linecolor[2]/f
+                g = [0, 0, 0]
+                while f >= 0:
+                    add_edge(tmp,
+                         args[0], args[1]+f, args[2], args[3], args[4]-f, args[5])
+                    add_edge(tmp,
+                         args[0], args[1]-f, args[2], args[3], args[4]-f, args[5])
+                    add_edge(tmp,
+                         args[0]+f, args[1], args[2], args[3]+f, args[4], args[5])
+                    add_edge(tmp,
+                         args[0]-f, args[1], args[2], args[3]-f, args[4], args[5])
+                    matrix_mult( stack[-1], tmp )
+                    draw_lines(tmp, screen, zbuffer, g)
+                    tmp = []
+                    g = [g[0]+dr, g[1]+dg, g[2]+db]
+                    f -= 1
+
             elif c == 'move':
                 tmp = make_translate(args[0], args[1], args[2])
                 matrix_mult(stack[-1], tmp)
